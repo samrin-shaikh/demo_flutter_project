@@ -26,7 +26,6 @@
 	<dict>
 	<key>NSAllowLocalNetworking</key>
 	<true/>
-
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
