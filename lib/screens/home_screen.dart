@@ -1,6 +1,7 @@
 import 'package:demoproject/core/constants.dart';
 import 'package:demoproject/core/customeColors.dart';
 import 'package:demoproject/screens/login.dart';
+import 'package:demoproject/screens/task1_daily_yoga_screen.dart';
 import 'package:demoproject/widgets/login_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -170,7 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {
                               textValues = "Second updated value";
                             });
-          
+
+                            Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: (context) => DailyYogaScreen()));
                           },
                           child: const Text("Save")),
           
