@@ -47,7 +47,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
-  google_maps_place_picker_mb: ^2.0.0-mb.20
   http: ^0.13.4
 
 
@@ -64,6 +63,10 @@ flutter:
   uses-material-design: true
   assets:
       - assets/images/test.png
+      - assets/images/flutter_logo.png
+      - assets/images/logo.png
+
+
   # To add assets to your application, add an assets section, like this:
 
   #   - images/a_dot_ham.jpeg
