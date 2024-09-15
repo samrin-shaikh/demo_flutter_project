@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LifecycleExampleScreen extends StatefulWidget {
-  const LifecycleExampleScreen({super.key});
+  String? name;
+  LifecycleExampleScreen({super.key,required this.name});
 
   @override
   State<LifecycleExampleScreen> createState() => _LifecycleExampleScreenState();
@@ -18,7 +19,7 @@ class _LifecycleExampleScreenState extends State<LifecycleExampleScreen> {
           onTap: (){
             Navigator.pop(context);
           },
-            child: const Icon(Icons.arrow_back_ios_new)),
+            child:Text(widget.name ?? '')),
       ),
     );
   }

@@ -5,7 +5,8 @@ import 'package:demoproject/screens/task1_daily_yoga_screen.dart';
 import 'package:demoproject/widgets/login_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:http/http.dart' as http;
+import '../core/route_generator.dart';
 import 'lifecycle_example_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,6 +31,28 @@ class _HomeScreenState extends State<HomeScreen> {
           Icon(Icons.more, color: Colors.red,)
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: const <Widget>[
+            DrawerHeader(
+                child: Text("Drawer Header")),
+            Text("Profile"),
+            ListTile(
+              title: Text("Profile"),
+              leading: Icon(Icons.person),
+            ),
+            ListTile(
+              title: Text("Address"),
+              leading: Icon(Icons.location_city),
+            ),
+            ListTile(
+              title: Text("Logout"),
+              leading: Icon(Icons.logout),
+            )
+          ],
+        ),
+      ),
+      drawerEnableOpenDragGesture: true,
       body:
           /// Column will be used for vertical align widgets
       Container(
@@ -172,9 +195,34 @@ class _HomeScreenState extends State<HomeScreen> {
                               textValues = "Second updated value";
                             });
 
-                            Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (context) => DailyYogaScreen()));
+                            /// example of simple navigator
+                            // stack
+                            // home screen - > taks 1 screen -> task 2 -> task 1 - > task 3-> home screen -> button logout - >
+                            // //
+                            // Navigator.pop(context); uses : On back to previous screen
+                            //Navigator.push uses: screen stack creation or add new screen to top of stack
+                            //Navigator.pushReplacement uses: if wanted to remove stack old screen refence and add new screen to stack/ replace current route with new one
+                            //Navigator.pushNamed  uses: with named parameter to screen name and navigate
+                            // Navigator.pushNamedAndRemoveUntil : used : clear all previous stack of screen and add new screen feature like logout will work with this
+                            // Navigator.push(
+                            //     context, //object of this screen
+                            // MaterialPageRoute(
+                            //     builder: (context) => const DailyYogaScreen()));
+
+                            // Navigator.pushReplacement(context,
+                            // MaterialPageRoute(builder: (context) => DailyYogaScreen()));
+                            // DailyYogaScreen : '/dailyYoga'
+                            //
+                            // Navigator.pushNamed(context, '/dailyYoga');
+                            //
+                            // Navigator.pushNamedAndRemoveUntil(context, '/dailyYoga', (Route<dynamic> route) => false);
+
+
+                            /// Example of route manager
+
+                            Navigator.pushNamed(context, RouteGeneratorsNames.dailyYogaScreen2, arguments: "gvgvghvgv");
+                            // Navigator.pushNamed(context, RouteGeneratorsNames.dailyYogaScreen1);
+
                           },
                           child: const Text("Save")),
           

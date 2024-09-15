@@ -13,28 +13,147 @@ class DailyYogaScreen extends StatefulWidget {
 
 class _DailyYogaScreenState extends State<DailyYogaScreen> {
   int selectedIndex = 0;
+  int bottomBarCurrentIndex = 0;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  static List<Widget> _pages = <Widget>[
+    Center(child: Text("Tab Home")),
+    Center(child: Text("Tab Cart")),
+    Center(child: Text("Tab Settings"))
+  ];
+
+  void _onBottomBarTap(int index){
+    print("Printing tap initial $bottomBarCurrentIndex");
+
+    setState(() {
+      bottomBarCurrentIndex  = index;
+      print("Printing tap $index");
+      print("Printing tap 1 $bottomBarCurrentIndex");
+
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scaffoldKey.currentState?.openDrawer();
+    setState(() {
+      bottomBarCurrentIndex  = 1;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        leading: RoundedImage(),
+        leading: GestureDetector(
+          onTap: (){
+            Navigator.pop(context);
+          },
+            child: Icon(Icons.arrow_back)),
+        // GestureDetector(
+        //   onTap: (){
+        //     _scaffoldKey.currentState?.openDrawer();
+        //
+        //   },
+        //     child: RoundedImage()),
         title: _appBArTitle(),
         actions: [
           _actionItemAppBar()
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildDailyChallenge(),
-            const SizedBox(height: 15,),
-            _buildCalender(),
-            const SizedBox(height: 15,),
-            _buildYourPlan()
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(20),
+          topLeft: Radius.circular(20)
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.orangeAccent,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.ac_unit_outlined,),
+              label: "Home"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.card_travel),
+                  label: "Cart"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: "Setting"),
+            ],
+          currentIndex: bottomBarCurrentIndex,
+          onTap: _onBottomBarTap
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: const <Widget>[
+            // DrawerHeader(
+            //     child: Text("Drawer Header")),
+            ListTile(
+              title: Text("Profile"),
+              leading: Icon(Icons.person),
+            ),
+            ListTile(
+              title: Text("Address"),
+              leading: Icon(Icons.location_city),
+            ),
+            ListTile(
+              title: Text("Logout"),
+              leading: Icon(Icons.logout),
+            )
           ],
         ),
+      ),
+      drawerEnableOpenDragGesture: true,
+      body: bottomBarCurrentIndex == 0
+          ?_homeBuild():
+      bottomBarCurrentIndex == 1
+          ?_cartBuild(): _settingsBuild(), //_pages[2]
+
+    );
+  }
+
+  Widget _homeBuild(){
+    return  Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildDailyChallenge(),
+          const SizedBox(height: 15,),
+          _buildCalender(),
+          const SizedBox(height: 15,),
+          _buildYourPlan()
+        ],
+      ),
+    );
+  }
+
+  Widget _cartBuild(){
+    return  Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildYourPlan()
+        ],
+      ),
+    );
+  }
+  Widget _settingsBuild(){
+    return  Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildCalender(),
+          const SizedBox(height: 15,),
+          _buildYourPlan()
+        ],
       ),
     );
   }
