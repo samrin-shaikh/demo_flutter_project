@@ -1,5 +1,6 @@
 import 'package:demoproject/core/route_generator.dart';
 import 'package:demoproject/screens/home_screen.dart';
+import 'package:demoproject/screens/topics_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,11 +14,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       onGenerateRoute: RouteGenerator.generateRoute, //to initalize route generator
-      initialRoute: RouteGeneratorsNames.homeScreen, // to set intial screen -> what to show at first time
+      initialRoute: RouteGeneratorsNames.topicScreen, // to set intial screen -> what to show at first time
       title: 'Demo',
-      home:  HomeScreen(),
+      home:  TopicScreen(),
     );
   }
 }

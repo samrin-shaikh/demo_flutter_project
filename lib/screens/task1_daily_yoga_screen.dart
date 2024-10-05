@@ -66,13 +66,14 @@ class _DailyYogaScreenState extends State<DailyYogaScreen> {
           _actionItemAppBar()
         ],
       ),
+
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
           topLeft: Radius.circular(20)
         ),
         child: BottomNavigationBar(
-          backgroundColor: Colors.orangeAccent,
+          backgroundColor: Colors.white,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   icon: Icon(Icons.ac_unit_outlined,),
@@ -85,7 +86,10 @@ class _DailyYogaScreenState extends State<DailyYogaScreen> {
                   label: "Setting"),
             ],
           currentIndex: bottomBarCurrentIndex,
-          onTap: _onBottomBarTap
+          onTap: _onBottomBarTap,
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+
         ),
       ),
       drawer: Drawer(
