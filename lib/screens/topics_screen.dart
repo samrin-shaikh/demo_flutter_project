@@ -99,6 +99,24 @@ class _TopicScreenState extends State<TopicScreen> {
                   () =>
                       Navigator.pushNamed(context, RouteGeneratorsNames.appLifeCycleScreen),
             ),
+            _buildButton(
+              context,
+              'CircularLoading/loading bar & Network Cache Image',
+                  () =>
+                  Navigator.pushNamed(context, RouteGeneratorsNames.loaderBarExampleScreen),
+            ),
+            _buildButton(
+              context,
+              'How to add dependency and use it',
+                  () =>
+                  Navigator.pushNamed(context, RouteGeneratorsNames.dependecyExample),
+            ),
+            _buildButton(
+              context,
+              'Date Time Picker',
+                  () =>
+                  Navigator.pushNamed(context, RouteGeneratorsNames.dateTimePickerScreen),
+            ),
           ],
         ),
       ),

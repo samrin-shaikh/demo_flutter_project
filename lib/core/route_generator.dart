@@ -1,4 +1,7 @@
+import 'package:demoproject/screens/date_time_picker_screen.dart';
+import 'package:demoproject/screens/dependecny_screen.dart';
 import 'package:demoproject/screens/image_assets_screen.dart';
+import 'package:demoproject/screens/loaderscreen.dart';
 import 'package:demoproject/screens/login.dart';
 import 'package:demoproject/screens/topics_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,6 +34,10 @@ class RouteGeneratorsNames{
   static const String interactivityInputWidgetsScreen = "/interactivityInputWidgetsScreen";
 
   static const String appLifeCycleScreen = "/appLifeCycleScreen";
+  static const String loaderBarExampleScreen = "/loaderBarExampleScreen";
+  static const String dependecyExample = "/dependecyExample";
+  static const String dateTimePickerScreen = "/dateTimePickerScreen";
+
 }
 
 class RouteGenerator{
@@ -72,10 +79,18 @@ class RouteGenerator{
       case RouteGeneratorsNames.appLifeCycleScreen:
         return MaterialPageRoute(builder: (_) => LifecycleExampleScreen());
 
+      case RouteGeneratorsNames.loaderBarExampleScreen:
+        return MaterialPageRoute(builder: (_) => const LoaderBarExample());
 
-      case RouteGeneratorsNames.dailyYogaScreen2:
+      case RouteGeneratorsNames.dependecyExample:
+        return MaterialPageRoute(builder: (_) => const DependecnyScreen());
+
+      case RouteGeneratorsNames.dateTimePickerScreen:
+        return MaterialPageRoute(builder: (_) => const DateTimePickerScreen());
+
+      case RouteGeneratorsNames.dateTimePickerScreen:
         if(args is String){
-          return MaterialPageRoute(builder: (_) => LifecycleExampleScreen());
+          return MaterialPageRoute(builder: (_) => const DateTimePickerScreen());
         }
 
         return errorRoute();
