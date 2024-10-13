@@ -3,6 +3,7 @@ import 'package:demoproject/screens/dependecny_screen.dart';
 import 'package:demoproject/screens/image_assets_screen.dart';
 import 'package:demoproject/screens/loaderscreen.dart';
 import 'package:demoproject/screens/login.dart';
+import 'package:demoproject/screens/rest_api_call_screen.dart';
 import 'package:demoproject/screens/topics_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,9 @@ class RouteGeneratorsNames{
   static const String loaderBarExampleScreen = "/loaderBarExampleScreen";
   static const String dependecyExample = "/dependecyExample";
   static const String dateTimePickerScreen = "/dateTimePickerScreen";
+  static const String restApiCallScreen = "/restApiCallScreen";
+
+
 
 }
 
@@ -87,6 +91,9 @@ class RouteGenerator{
 
       case RouteGeneratorsNames.dateTimePickerScreen:
         return MaterialPageRoute(builder: (_) => const DateTimePickerScreen());
+
+      case RouteGeneratorsNames.restApiCallScreen:
+        return MaterialPageRoute(builder: (_) => const RestApiCallScreen());
 
       case RouteGeneratorsNames.dateTimePickerScreen:
         if(args is String){

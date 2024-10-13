@@ -117,6 +117,12 @@ class _TopicScreenState extends State<TopicScreen> {
                   () =>
                   Navigator.pushNamed(context, RouteGeneratorsNames.dateTimePickerScreen),
             ),
+            _buildButton(
+              context,
+              'RestApi',
+                  () =>
+                  Navigator.pushNamed(context, RouteGeneratorsNames.restApiCallScreen),
+            ),
           ],
         ),
       ),
