@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class AdpativeResponsiveScreen extends StatefulWidget {
   const AdpativeResponsiveScreen({super.key});
 
@@ -7,6 +8,22 @@ class AdpativeResponsiveScreen extends StatefulWidget {
 }
 
 class _AdpativeResponsiveScreenState extends State<AdpativeResponsiveScreen> {
+
+  SharedPreferences? preferences;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchSharedPrefValues();
+    ///getting shared pref values
+  }
+  Future<void> _fetchSharedPrefValues() async {
+    preferences = await SharedPreferences.getInstance();
+    ///get token values
+    String? userToken = preferences?.getString("user_token");
+    print("shared Pref: $userToken");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

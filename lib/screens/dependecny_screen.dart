@@ -4,6 +4,7 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 import '../core/route_generator.dart';
 import '../widgets/appbar_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class DependecnyScreen extends StatefulWidget {
   const DependecnyScreen({super.key});
 
@@ -12,6 +13,22 @@ class DependecnyScreen extends StatefulWidget {
 }
 
 class _DependecnyScreenState extends State<DependecnyScreen> {
+
+  SharedPreferences? preferences;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchSharedPrefValues();
+    ///getting shared pref values
+  }
+  Future<void> _fetchSharedPrefValues() async {
+    preferences = await SharedPreferences.getInstance();
+    ///get token values
+    String? userToken = preferences?.getString("user_token");
+    print("shared Pref in depen screen: $userToken");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

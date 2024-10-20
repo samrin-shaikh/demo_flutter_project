@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RestApiCallScreen extends StatefulWidget {
   const RestApiCallScreen({super.key});
@@ -12,6 +13,7 @@ class RestApiCallScreen extends StatefulWidget {
 class _RestApiCallScreenState extends State<RestApiCallScreen> {
   String _responseData = 'No data';
   bool _isLoading = false;
+  SharedPreferences? pref;
 
   ///Entry point: server_url: https://ispickdev.bilsamtech.in/
   ///endpoint: api/v1/get-home-content
@@ -28,7 +30,7 @@ class _RestApiCallScreenState extends State<RestApiCallScreen> {
       final url = Uri.parse('https://ispickdev.bilsamtech.in/api/v1/create-guest-token');
 
       // Prepare the data to be sent
-      Map<String, dynamic> data = {
+      Map<String, dynamic> postParameter = {
         'deviceid': 'dkmdfjkvndjfnv',
         'userid': 1234,
         'email':"ssam@gmailc.com"
@@ -44,11 +46,11 @@ class _RestApiCallScreenState extends State<RestApiCallScreen> {
       final response = await http.post(
         url,
         headers: headers,
-        body: json.encode(data),
+        body: json.encode(postParameter),
       );
 
       print("dfsdf: ${response.statusCode}");
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         ///decoding json data from api response to access
         Map<String, dynamic> responseData = json.decode(response.body);
 
@@ -63,6 +65,15 @@ class _RestApiCallScreenState extends State<RestApiCallScreen> {
             "\ndata:${responseData['data']} "
             "\nuser_type: ${responseData['data']['user_type']}");
 
+
+        pref = await SharedPreferences.getInstance();
+        await pref?.setString("user_token", responseData['data']['user_type']);
+        await pref?.setInt("userid", 1);
+        await pref?.setBool("status", responseData['status']);
+
+        /// to save values locally
+        /// 1. shared prefereneces
+        // Value to store (key,value)
       }else{
         setState(() {
           _isLoading = false;
@@ -80,6 +91,10 @@ class _RestApiCallScreenState extends State<RestApiCallScreen> {
     }
   }
 
+  Future<void> _removeSharedPref() async {
+    pref = await SharedPreferences.getInstance();
+    await pref?.remove("user_token");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
