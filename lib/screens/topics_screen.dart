@@ -123,6 +123,12 @@ class _TopicScreenState extends State<TopicScreen> {
                   () =>
                   Navigator.pushNamed(context, RouteGeneratorsNames.restApiCallScreen),
             ),
+            _buildButton(
+              context,
+              'Hardware permission handle camera/gallery/call/sms/location',
+                  () =>
+                  Navigator.pushNamed(context, RouteGeneratorsNames.permissionScreen),
+            ),
           ],
         ),
       ),

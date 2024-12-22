@@ -1,8 +1,10 @@
+import 'package:demoproject/screens/call_sms_screen.dart';
 import 'package:demoproject/screens/date_time_picker_screen.dart';
 import 'package:demoproject/screens/dependecny_screen.dart';
 import 'package:demoproject/screens/image_assets_screen.dart';
 import 'package:demoproject/screens/loaderscreen.dart';
 import 'package:demoproject/screens/login.dart';
+import 'package:demoproject/screens/permission_handleing_screen.dart';
 import 'package:demoproject/screens/rest_api_call_screen.dart';
 import 'package:demoproject/screens/topics_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,8 +13,10 @@ import 'package:flutter/material.dart';
 import '../screens/adapative_responsive_screen.dart';
 import '../screens/alertBox_Popup_snackbar_screen.dart';
 import '../screens/home_screen.dart';
+import '../screens/image_picker_with_permission.dart';
 import '../screens/interactivity_input_widgets_screen.dart';
 import '../screens/lifecycle_example_screen.dart';
+import '../screens/location_permission_screen.dart';
 import '../screens/task1_daily_yoga_screen.dart';
 import '../screens/widgets_demo_screen.dart';
 import '../screens/widgte_expanded_flexible_screen.dart';
@@ -40,6 +44,10 @@ class RouteGeneratorsNames{
   static const String dateTimePickerScreen = "/dateTimePickerScreen";
   static const String restApiCallScreen = "/restApiCallScreen";
 
+  static const String permissionScreen = "/permissionScreen";
+  static const String locationScreen = "/locationScreen";
+  static const String phoneSmsScreen = "/phoneSmsScreen";
+  static const String cameraGalleryScreen = "/cameraGalleryScreen";
 
 
 }
@@ -94,6 +102,19 @@ class RouteGenerator{
 
       case RouteGeneratorsNames.restApiCallScreen:
         return MaterialPageRoute(builder: (_) => const RestApiCallScreen());
+
+      case RouteGeneratorsNames.permissionScreen:
+        return MaterialPageRoute(builder: (_) => const PermissionHandlingScreen());
+
+        case RouteGeneratorsNames.locationScreen:
+      return MaterialPageRoute(builder: (_) => const LocationPermissionScreen());
+
+      case RouteGeneratorsNames.cameraGalleryScreen:
+        return MaterialPageRoute(builder: (_) => const ImagePickerScreen());
+
+      case RouteGeneratorsNames.phoneSmsScreen:
+        return MaterialPageRoute(builder: (_) => const CallSmsScreen());
+
 
       case RouteGeneratorsNames.dateTimePickerScreen:
         if(args is String){
