@@ -7,6 +7,18 @@ import '../core/route_generator.dart';
 import '../widgets/appbar_widget.dart';
 import 'package:app_settings/app_settings.dart';
 
+/// infoplist
+//  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+//     <string>Location access required</string>
+//     <key>NSLocationAlwaysUsageDescription</key>
+//     <string>Location access required</string>
+///menifest file
+// <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+//
+// <!-- Include only if your app benefits from precise location access. -->
+// <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+
 class LocationPermissionScreen extends StatefulWidget {
   const LocationPermissionScreen({super.key});
 
@@ -65,11 +77,16 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
+    print("location_check:: in handle permission");
 
     try {
       // Test if location services are enabled
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      print("location_check:: in service location");
+
       if (!serviceEnabled) {
+        print("location_check:: in service location --false");
+
         if (!mounted) return false;
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Location services are disabled. Please enable the services'))
@@ -77,10 +94,21 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
         return false;
       }
 
+
+      /// pemission types
+      /// 1. denied
+      /// 2. denied forever
+      /// 3. granted/allowed
       permission = await Geolocator.checkPermission();
+      print("location_check:: in permission ${permission}");
+
       if (permission == LocationPermission.denied) {
+        print("location_check:: in permission denied ${permission}");
+
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
+          print("location_check:: in permission denied again ${permission}");
+
           if (!mounted) return false;
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Location permissions are denied'))
@@ -90,6 +118,8 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
       }
 
       if (permission == LocationPermission.deniedForever) {
+        print("location_check:: in permission deniedForever ${permission}");
+
         if (!mounted) return false;
         _showLocationPermissionDialog(context);
         return false;
@@ -97,6 +127,8 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
 
       return true;
     } catch (e) {
+      print("location_check:: in catch ${e}");
+
       debugPrint('Error handling location permission: $e');
       return false;
     }
@@ -107,6 +139,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
       _isLoading = true;
     });
 
+    print("location_check:: 1");
     try {
       final hasPermission = await _handleLocationPermission();
       if (!hasPermission) {
@@ -116,12 +149,15 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
         return;
       }
 
+      print("location_check:: got current location");
+
       final position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high
       );
 
       /// position will return current location lat lng
       if (!mounted) return;
+      print("location_check:: got current location ${position}");
 
       setState(() {
         _currentPosition = position;
@@ -145,7 +181,22 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
     List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
     if (!_isActive) return;
 
+    print("location_check:: address ${placemarks}");
+
+
     Placemark place = placemarks[0];
+    // [  place.Name: Archival Campus School Road,
+    //   place.Street: Archival Campus School Road, Joyville,
+    //   ISO Country Code: IN,
+    //   place.Country: India,
+    //   place.Postal code: 411057,
+    //   Administrative area: Maharashtra,
+    //   Subadministrative area: Pune,
+    //   place.Locality: Pune,
+    //   place.Sublocality: Hinjawadi,
+    //   Thoroughfare: Archival Campus School Road,
+    //   Subthoroughfare: ]
+
     setState(() {
       formattedAddress = '';
       formattedAddress = "${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}";
@@ -182,6 +233,8 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
   }
 
   Future<void> _goToSettings() async {
+    print("location_check:: in gotosetting");
+
     isInSettingCalled = true;
     if (Platform.isAndroid) {
       await openAppSettings();

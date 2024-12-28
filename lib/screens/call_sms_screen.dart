@@ -6,6 +6,21 @@ import 'package:share_plus/share_plus.dart';
 import '../core/route_generator.dart';
 import '../widgets/appbar_widget.dart';
 
+/// menifest
+//   <uses-permission android:name="android.permission.CALL_PHONE" />
+//     <uses-permission android:name="android.permission.SEND_SMS" />
+//     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+///infoplist
+// <key>LSApplicationQueriesSchemes</key>
+//     <array>
+//         <string>tel</string>
+//         <string>sms</string>
+//     </array>
+
+/// dependency : URL_LAUNCHER
+
+
 class CallSmsScreen extends StatefulWidget {
   const CallSmsScreen({super.key});
 

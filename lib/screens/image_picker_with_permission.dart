@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 import '../core/route_generator.dart';
 import '../widgets/appbar_widget.dart';
@@ -19,8 +20,14 @@ import '../widgets/appbar_widget.dart';
 
 ///permission type
 ///allow
-///deney
+///deney : android
 //deney forever--> user need redirect setting option and user need to manually toggle the button
+
+/// to upload image on server/API
+/// 1. get image path
+/// 2. image compress : 60 MB -> 0-100% reduced by 50%  30MB 1: 2 min
+/// 3. image quality: 0- 100% 20 MB 10 MB
+/// 4. pass to API 5-10 sec to upload
 
 class ImagePickerScreen extends StatefulWidget {
   const ImagePickerScreen({Key? key}) : super(key: key);
@@ -36,7 +43,8 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
   // Function to pick image from camera
   Future<void> _getImageFromCamera() async {
     try {
-      final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+      _picker.pickImage(source: ImageSource.camera);
+      final XFile? photo = await _picker.pickImage(source: ImageSource.camera);//will open camera
       if (photo != null) {
         setState(() {
           _image = File(photo.path);
@@ -125,8 +133,13 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
 
     print("permission_log:: $cameraStatus");
     if (cameraStatus.isDenied) {
+      print("permission_log::1 $cameraStatus");
+
       // Request permission
       cameraStatus = await Permission.camera.request();
+    }else{
+      print("permission_log::2 $cameraStatus");
+
     }
 
     if (cameraStatus.isPermanentlyDenied) {
