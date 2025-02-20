@@ -17,6 +17,7 @@ import '../screens/image_picker_with_permission.dart';
 import '../screens/interactivity_input_widgets_screen.dart';
 import '../screens/lifecycle_example_screen.dart';
 import '../screens/location_permission_screen.dart';
+import '../screens/show_nitifcation_screen.dart';
 import '../screens/task1_daily_yoga_screen.dart';
 import '../screens/widgets_demo_screen.dart';
 import '../screens/widgte_expanded_flexible_screen.dart';
@@ -65,7 +66,7 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_) =>  const ListViewNavigationDrawerScreen());
 
       case RouteGeneratorsNames.widgetDemoScreen:
-        return MaterialPageRoute(builder: (_) => const WidgetDemoStateful());
+        return MaterialPageRoute(builder: (_) => const ShowNitifcationScreen());
 
       case RouteGeneratorsNames.widgetDemoExpandedFlexibleScreen:
         return MaterialPageRoute(builder: (_) => const WidegtDemoExpandedFlexibleScreen());

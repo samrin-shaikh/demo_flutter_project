@@ -48,6 +48,8 @@ dependencies:
   geocoding: ^3.0.0
   url_launcher: ^6.2.4
   share_plus: ^7.2.1
+  google_maps_flutter: ^2.10.0
+  flutter_local_notifications: ^18.0.1
 
 dev_dependencies:
   flutter_test:

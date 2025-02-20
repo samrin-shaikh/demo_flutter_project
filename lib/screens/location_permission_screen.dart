@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../core/route_generator.dart';
 import '../widgets/appbar_widget.dart';
@@ -34,6 +35,16 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
   bool isFromSetting = false;
   bool isInSettingCalled = false;
   String? formattedAddress;
+
+  // For google map implementation
+  GoogleMapController? _controller;
+  final Set<Marker> _markers = {};
+
+  // Initial camera position
+  static const CameraPosition _initialPosition = CameraPosition(
+    target: LatLng(0, 0),
+    zoom: 15,
+  );
 
   @override
   void initState() {
@@ -169,6 +180,27 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
       _updateAddressFromLatLng(_currentPosition!);
       debugPrint('Location: ${position.latitude}, ${position.longitude}');
 
+      // For google map marker set and camera move
+      setState(() {
+        _currentPosition = position;
+        _markers.add(
+          Marker(
+            markerId: const MarkerId('currentLocation'),
+            position: LatLng(position.latitude, position.longitude),
+            infoWindow: const InfoWindow(title: 'Current Location'),// Custom screen/popup/text/widget can be added here
+          ),
+        );
+      });
+
+      // Animate camera to current position
+      _controller?.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 15,
+          ),
+        ),
+      );
     } catch (e) {
       debugPrint('Error getting location: $e');
       if (!mounted) return;
@@ -278,6 +310,16 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> wit
                   ),
                 ],
               ),
+            ),
+            GoogleMap(
+              initialCameraPosition: _initialPosition,
+              markers: _markers,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: false,
+              zoomControlsEnabled: true,
+              onMapCreated: (GoogleMapController controller) {
+                _controller = controller;
+              },
             ),
             _buildLocateButton(),
           ],

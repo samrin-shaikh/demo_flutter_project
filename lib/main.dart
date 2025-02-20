@@ -1,9 +1,12 @@
 import 'package:demoproject/core/route_generator.dart';
+import 'package:demoproject/popups/nitification_service.dart';
 import 'package:demoproject/screens/home_screen.dart';
 import 'package:demoproject/screens/topics_screen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.initNotification();
   runApp(const MyApp());
 }
 
@@ -22,5 +25,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
